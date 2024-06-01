@@ -1,12 +1,26 @@
 import type { Functor, Applicative, Monad } from "./patterns";
 
+/**
+ * Throws an error with the given message if the condition is false.
+ *
+ * @param {boolean} condition - The condition to check.
+ * @param {string} message - The error message to throw.
+ * @return {void} This function does not return anything.
+ */
 export function assert(condition: boolean, message: string) {
   if (!condition) {
     throw new Error(message);
   }
 }
 
-function checkFunctorLaws<T, U, V>(functor: Functor<T>, f: (x: T) => U, g: (x: U) => V) {
+/**
+ * Checks the functor laws for the given functor, function `f`, and function `g`.
+ *
+ * @param {Functor<T>} functor - The functor to check.
+ * @param {(x: T) => U} f - The function `f` to apply to the functor.
+ * @param {(x: U) => V} g - The function `g` to apply to the result of `f`.
+ */
+export function checkFunctorLaws<T, U, V>(functor: Functor<T>, f: (x: T) => U, g: (x: U) => V) {
   // Identity law: fmap id = id
   assert(JSON.stringify(functor.map(x => x)) === JSON.stringify(functor), 'Functor identity law failed');
 
