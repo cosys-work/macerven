@@ -1,4 +1,6 @@
-# macer
+# macerven
+
+This project provides utilities for use with the MACER / MAVEN primitives in cosys.work ecosystem.
 
 To install dependencies:
 

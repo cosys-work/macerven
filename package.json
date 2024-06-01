@@ -1,5 +1,5 @@
 {
-  "name": "macer",
+  "name": "macer-ven-ts",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
