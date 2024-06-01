@@ -27,14 +27,7 @@ jobs:
 
       # ========================================================
       #
-      # Step 1: Build your artifacts.
-      #
-      # ========================================================
-      - name: Build artifacts
-      - run: npx jsr publish
-      # ========================================================
-      #
-      # Step 2: Add a step to generate the provenance subjects
+      # Step 1: Add a step to generate the provenance subjects
       #         as shown below. Update the sha256 sum arguments
       #         to include all binaries that you generate
       #         provenance for.
@@ -60,3 +53,14 @@ jobs:
     with:
       base64-subjects: "${{ needs.build.outputs.digests }}"
       upload-assets: true # Optional: Upload to a new release
+
+  publish:
+    needs: [provenance]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # The OIDC ID token is used for authentication with JSR.    
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx jsr publish  
+
