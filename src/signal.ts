@@ -8,7 +8,7 @@ const BRAND_SYMBOL = Symbol.for("free-act-signals");
 * A linked list node used to track dependencies (sources) and dependents (targets).
 * Also used to remember the source's last version number that the target saw. 
 */
-export class Node<T> {
+export class Node<T extends object> {
 	/* A source whose value the target depends on. */
 	_source?: Signal<T>;
 	_prevSource?: Node<T>;
@@ -98,6 +98,10 @@ export class Signal<T extends Object> implements Monad<T> {
       this.#targets._nextTarget = target;
       target._prevTarget = this.#targets;
       this.#targets = target;
+
+      if (this.#node) {
+        this.#node._version = this.#version;
+      }
     }
   }
 
