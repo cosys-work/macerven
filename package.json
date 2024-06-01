@@ -2,6 +2,7 @@
   "name": "macer-ven-ts",
   "module": "index.ts",
   "type": "module",
+  "description": "This package provides utilities for use with the MACER / MAVEN primitives in cosys.work ecosystem.",
   "devDependencies": {
     "@types/bun": "latest"
   },
