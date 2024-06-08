@@ -9,7 +9,7 @@
  *  This type is commonly used to create objects that wrap a value and provide additional methods or functionality.
  */
 export type Value<T> = {
-  val: T;
+  val: () => T;
 };
 
 /**
