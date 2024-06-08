@@ -6,6 +6,9 @@
   "devDependencies": {
     "@types/bun": "latest"
   },
+  "dependencies": {
+    "rxjs": "7.8.1"
+  },
   "peerDependencies": {
     "typescript": "^5.0.0"
   }

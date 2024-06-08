@@ -19,7 +19,7 @@ export type Value<T> = {
  *   This allows you to transform the wrapped value using a function in a type-safe manner.
  */
 export type Functor<T> = Value<T> & {
-  map: <U>(f: (x: T) => U) => Functor<U>;
+  fmap: <U>(f: (x: T) => U) => Functor<U>;
 };
 
 /**
@@ -36,8 +36,10 @@ export type Functor<T> = Value<T> & {
  *   while the pure method wraps a value in an Applicative structure.
  */
 export type Applicative<T> = Functor<T> & {
-  ap: <U>(f: Applicative<(x: T) => U>) => Applicative<U>;
-  pure: (x: T) => Applicative<T>;
+  ap?: <U>(f: Applicative<(x: T) => U>) => Applicative<U>;
+  cart: <U>(fa: Array<(x: T) => U>) => Applicative<U[]>;
+  fold: <U extends T>(fa: Array<(x: T) => U>) => Applicative<U>;
+  pure: <U>(x: U) => Applicative<U>;
 };
 
 /**
@@ -54,6 +56,6 @@ export type Applicative<T> = Functor<T> & {
  *   while the join method flattens nested Monad structures.
  */
 export type Monad<T> = Applicative<T> & {
-  bind: <U>(f: (x: T) => Monad<U>) => Monad<U>;
-  join: (moMo: Monad<Monad<T>>) => Monad<T>;
+  bind: <U>(f: (x: T) => Monad<U>) => Monad<U>;  // Good to have, bind :: m t -> (t -> m u) -> m u
+  join: (moMo: Monad<Monad<T>>) => Monad<T>; // Essential
 };
