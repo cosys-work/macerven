@@ -15,7 +15,6 @@ export function join<U>(moMo: Monad<Monad<U>>): Monad<U> {
 
 /**
  * Creates a folder object with a value and functions to manipulate it.
- *
  * @param {T} x - The initial value of the folder.
  * @return {Monad<T>} - An object with the following functions:
  *   - fmap: Maps the value of the folder using the provided function.
@@ -28,7 +27,6 @@ export const pure = <T>(x: T): Monad<T> => folder(x);
 
 /**
  * Creates a folder object with a value and functions to manipulate it.
- *
  * @param {T} val - The initial value of the folder.
  * @return {Monad<T>} - An object with the following functions:
  *   - fmap: Maps the value of the folder using the provided function.
@@ -51,7 +49,6 @@ export const folder: <T>(val: T) => Monad<T>
 /**
  * Creates a Monad object with a value and functions to manipulate it.
  *
- * @template T - The type of the value.
  * @param {T} val - The initial value of the Monad.
  * @return {Monad<T>} - An object with the following functions:
  *   - val: Returns the current value of the Monad.
