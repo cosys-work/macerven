@@ -1,3 +1,4 @@
+import { BehaviorSubject } from "rxjs";
 import type { Monad } from "../patterns";
 
 export type Value<T> = {
@@ -60,3 +61,36 @@ export const folder: <T>(val: T) => Monad<T>
     bind: <U>(f: (x: T) => Monad<U>) => join(folder(f(val))),
     join    
 }) as Monad<T>;
+
+/**
+ * Creates a Monad object with a value and functions to manipulate it.
+ *
+ * @template T - The type of the value.
+ * @param {T} val - The initial value of the Monad.
+ * @return {Monad<T>} - An object with the following functions:
+ *   - val: Returns the current value of the Monad.
+ *   - fmap: Maps the value of the Monad using the provided function.
+ *   - cart: Applies an array of functions to the value of the Monad.
+ *   - fold: Applies a reducer function to the value of the Monad.
+ *   - pure: Creates a new Monad with the provided value.
+ *   - bind: Applies a function to the value of the Monad and returns a new Monad.
+ *   - join: Returns a new Monad with the value of the current Monad.
+ *   - sub: Subscribes to changes in the value of the Monad.
+ *   - unsub: Unsubscribes from changes in the value of the Monad.
+ *   - pipe: Pipes the value of the Monad to another Observable.
+ */
+export const piper: <T>(val: T) => Monad<T>
+  = <T>(val: T) =>  { 
+    const __val = new BehaviorSubject<T>(val);
+    return ({
+    val: () => __val.value,
+    fmap: <U>(f: (x: T) => U) => piper(f(__val.value)),
+    cart: <U>(fa: Array<Func<T, U>>) => piper(fa.map(f => f(__val.value))),
+    fold: <U extends T>(fa: Array<Func<T, U>>) => piper(fa.reduce((acc, f) => f(acc), __val.value)),
+    pure,
+    bind: <U>(f: (x: T) => Monad<U>) => join(piper(f(__val.value))),
+    join,
+    sub: __val.subscribe,
+    unsub: __val.unsubscribe,
+    pipe: __val.pipe 
+  }) as Monad<T> }
