@@ -1,20 +1,6 @@
 import { BehaviorSubject } from "rxjs";
 import type { Monad } from "../patterns";
 
-export type Value<T> = {
-  val: () => T
-} & { __brand: 'value' };
-
-/**
- * Checks if the given object is a value of type T.
- *
- * @param {any} obj - The object to check.
- * @return {obj is Value<T>} - True if the object is a value of type T, false otherwise.
- */
-export function isValue<T>(obj: any): obj is Value<T> {
-    return obj?.__brand === 'value' && obj?.val() !== undefined;
-}
-
 /**
  * A function that takes a value of type T and returns a value of type U.
 */
